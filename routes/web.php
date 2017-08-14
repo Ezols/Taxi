@@ -20,3 +20,5 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/applyfortaxi', 'TaxiController@applyForTaxi')->name('applyForTaxi');
 Route::get('/showrides', 'TaxiController@showRides')->name('showRides');
+Route::get('/showusers', 'TaxiController@showUsers')->name('showUsers');
+Route::get('/updateuser/{id}', 'TaxiController@updateUser')->name('updateUser');

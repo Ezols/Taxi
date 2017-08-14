@@ -39,6 +39,7 @@
                         @if (Auth::user())
                             <li><a href="{{ route('applyForTaxi') }}">Apply for taxi</a></li>
                             <li><a href="{{ route('showRides') }}">Show rides</a></li>
+                            <li><a href="{{ route('showUsers') }}">Users</a></li>
                         @endif
                     </ul>
 

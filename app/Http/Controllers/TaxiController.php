@@ -16,6 +16,30 @@ class TaxiController
 
         public function showRides()
         {
-            dd(1);
+            $rides = DB::table('rides')->get();
+            $data['rides'] = $rides;
+
+            return view('showrides', $data);
+        }
+
+        public function showUsers()
+        {
+            $users = DB::table('users')->get();
+
+            $data['users'] = $users;
+
+            return view('showusers', $data);
+        }
+
+        public function updateUser($id)
+        {
+            $user = DB::table('users')
+                ->where('id', $id)
+                ->first() ?: abort(404);
+
+            $data['updateUser'] = $user;
+
+
+            return view('updateuser', $data);
         }
 }
