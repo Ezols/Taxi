@@ -38,6 +38,7 @@
                     <ul class="nav navbar-nav">
                         @if (Auth::user())
                             <li><a href="{{ route('applyForTaxi') }}">Apply for taxi</a></li>
+                            <li><a href="{{ route('showRides') }}">Show rides</a></li>
                         @endif
                     </ul>
 
