@@ -1,6 +1,6 @@
 <?php namespace App\Http\Controllers;
 use DB;
-
+use Illuminate\Support\Facades\Redirect;
 
 
 class TaxiController
@@ -10,6 +10,7 @@ class TaxiController
             $data = request()->all();
             //dd($data);
             DB::table('rides')->insert($data);
+
 
             return view('applyfortaxi', $data);
         }
@@ -37,9 +38,26 @@ class TaxiController
                 ->where('id', $id)
                 ->first() ?: abort(404);
 
-            $data['updateUser'] = $user;
-
+            $data['user'] = $user;
 
             return view('updateuser', $data);
+        }
+
+        public function updateFinal($id)
+        {
+            DB::table('users')
+                ->where('id', $id)
+                ->update(['name' => request()->name, 'email' => request()->email, 'password' => request()->password]);
+
+            return Redirect::back();
+        }
+
+        public function deleteUser($id)
+        {
+            DB::table('users')
+                ->where('id', $id)
+                ->delete();
+
+            return Redirect::back();
         }
 }

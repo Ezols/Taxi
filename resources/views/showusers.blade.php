@@ -7,6 +7,7 @@
 @foreach($users as $user)
     <ul>
         <a href="{{ url('/updateuser', $user->id) }}"><li>{{ $user->name }}</li></a>
+        <a href="{{ url('/deleteuser', $user->id) }}">Delete</a>
     </ul>
 @endforeach
 
