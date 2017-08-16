@@ -2,7 +2,7 @@
 
 <h1>Apply for taxi</h1>
 
-<form action="/applyfortaxi" method="get">
+<form action="{{ route('applyForTaxi') }}" method="get">
 
     Name:<br>
     <input type="text" name="userId">
