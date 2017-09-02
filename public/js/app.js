@@ -803,12 +803,26 @@ var submitOnInputChange = function submitOnInputChange() {
   });
 };
 
+var invoiceNumberSynchroneChange = function invoiceNumberSynchroneChange() {
+  $('.invoiceNumber').on('keyup', function (e) {
+    var value = e.target.value;
+    var carIndex = $(this).closest('tr').find('.carIndex')[0].value;
+
+    var some = $(this).closest('form').find('.carIndex').filter(function (i, input) {
+      return input.value === carIndex;
+    }).each(function (i, item) {
+      $(item).closest('tr').find('.invoiceNumber')[0].value = value;
+    });
+  });
+};
+
 Vue.component('example', __webpack_require__(36));
 
 var app = new Vue({
   el: '#app',
   mounted: function mounted() {
     submitOnInputChange();
+    invoiceNumberSynchroneChange();
   }
 });
 

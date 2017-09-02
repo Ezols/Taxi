@@ -30,6 +30,7 @@
                             <th>Address</th>
                             <th>LeavingTime</th>
                             <th>Car</th>
+                            <th>Invocie</th>
                         </tr>
                         @foreach($rides as $ride)
                             <tr>
@@ -37,12 +38,25 @@
                                 <td>{{ $ride->address }}</td>
                                 <td>{{ $ride->leavingTime }}</td>
                                 <td class="sauraisLauks">
+                                    <input type="hidden" name="ride[{{ $ride->id }}][rideId]" value="{{ $ride->id }}">
                                     @include('partials.inputs.text', [
-                                        'name' => "ride[$ride->id]",
+                                        'name' => "ride[{$ride->id}][car]",
                                         'value' => $ride->car,
                                         'isSmall' => true,
                                         'hideLabel' => true,
-                                        'errorKey' => "ride.{$loop->index}.car",
+                                        'errorKey' => "ride.{$ride->id}.car",
+                                        'hideErrorMessage' => true,
+                                        'class' => 'carIndex',
+                                    ])
+                                </td>
+                                <td class="sauraisLauks">
+                                    @include('partials.inputs.text', [
+                                        'name' => "ride[$ride->id][invoice]",
+                                        'value' => $ride->invoice,
+                                        'isSmall' => true,
+                                        'hideLabel' => true,
+                                        'class' => 'invoiceNumber',
+                                        'errorKey' => "ride.{$loop->index}.invoice",
                                         'hideErrorMessage' => true,
                                     ])
                                 </td>
@@ -50,7 +64,7 @@
                         @endforeach
                     </table>
                     <div class="col-md-12">
-                        <input class="btn btn-primary pull-right" type="submit" name="submit" value="Save assigned cars">
+                        <input class="btn btn-primary pull-right" type="submit" name="submit" value="Save data changes">
                     </div>
                 </form>
             </div>

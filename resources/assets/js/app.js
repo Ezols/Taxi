@@ -21,11 +21,29 @@ let submitOnInputChange = () => {
   })
 }
 
+let invoiceNumberSynchroneChange = () => {
+  $('.invoiceNumber').on('keyup', function(e) {
+    let value = e.target.value
+    let carIndex = $(this).closest('tr').find('.carIndex')[0].value;
+
+    let some = $(this)
+      .closest('form')
+      .find('.carIndex')
+      .filter(function(i, input) {
+        return input.value === carIndex
+      })
+      .each(function(i, item) {
+        $(item).closest('tr').find('.invoiceNumber')[0].value = value
+      });
+  })
+}
+
 Vue.component('example', require('./components/Example.vue'));
 
 const app = new Vue({
     el: '#app',
     mounted () {
       submitOnInputChange();
+      invoiceNumberSynchroneChange();
     }
 });

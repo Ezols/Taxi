@@ -79,23 +79,18 @@ class TaxiController
 
     public function assignCarsStore()
     {
-        $request = request();
-
-        $ride = [];
-        foreach($request->ride as $rideId => $car) {
-            $ride[] = compact('rideId', 'car');
-        }
-
-        $request->merge(compact('ride'));
-
         // Validation
-        $this->validate($request, [
+        $this->validate(request(), [
             'ride.*.rideId' => 'required|exists:rides,id',
             'ride.*.car' => "nullable|integer",
+            'ride.*.invoice' => "nullable",
         ]);
 
-        foreach($request->ride as $ride) {
-            Ride::where('id', $ride['rideId'])->update(['car' => $ride['car']]);
+        foreach(request()->ride as $index => $ride) {
+            Ride::where('id', $ride['rideId'])->update([
+                'car' => $ride['car'],
+                'invoice' => $ride['invoice'],
+            ]);
         }
 
         return redirect()->back();
