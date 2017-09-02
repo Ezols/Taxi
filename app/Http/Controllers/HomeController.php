@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Ride;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $ride = Ride::where('userId', Auth::id())->first();
+
+        if($ride) {
+            return redirect()->route('showApplication');
+        }
+
+        return redirect()->route('applyForTaxi');
     }
 }

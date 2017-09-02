@@ -1,61 +1,107 @@
 <?php namespace App\Http\Controllers;
 use DB;
 use Illuminate\Support\Facades\Redirect;
-
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use App\Ride;
+use Auth;
 
 class TaxiController
 {
-        public function applyForTaxi()
-        {
-            $data = request()->all();
-            DB::table('rides')->insert($data);
+    use ValidatesRequests;
 
-            return view('applyfortaxi', $data);
+    const OPTIONS = ['23:00' => '23:00', '00:00' => '00:00', '02:00' => '02:00'];
+
+    public function applyForTaxi()
+    {
+        $ride = Ride::where('userId', Auth::id())->first();
+
+        if($ride) {
+            return redirect()->route('showApplication');
         }
 
-        public function showRides()
-        {
-            $rides = DB::table('rides')->get();
-            $data['rides'] = $rides;
+        $options = static::OPTIONS;
+        return view('applyfortaxi', compact('options'));
+    }
 
-            return view('showrides', $data);
+    public function applyForTaxiStore()
+    {
+        $ride = Ride::where('userId', Auth::id())->first();
+
+        if($ride) {
+            return redirect()->route('showApplication');
         }
 
-        public function showUsers()
-        {
-            $users = DB::table('users')->get();
+        // Validation rule preperation
+        $levingTimeIn = join(',', static::OPTIONS);
 
-            $data['users'] = $users;
+        // Validation
+        $this->validate(request(), [
+            'address' => 'required',
+            'leavingTime' => "required|in:{$levingTimeIn}",
+        ]);
 
-            return view('showusers', $data);
+        // Storing data
+        Ride::applyForTaxi(Auth::id(), request()->address, request()->leavingTime);
+
+        return redirect()->route('showApplication');
+    }
+
+    public function showApplication()
+    {
+        $ride = Ride::where('userId', Auth::id())->first();
+
+        if(! $ride) {
+            return redirect()->route('applyForTaxi');
         }
 
-        public function updateUser($id)
-        {
-            $user = DB::table('users')
-                ->where('id', $id)
-                ->first() ?: abort(404);
 
-            $data['user'] = $user;
 
-            return view('updateuser', $data);
-        }
+        return view('showApplication', compact('ride'));
+    }
 
-        public function updateFinal($id)
-        {
-            DB::table('users')
-                ->where('id', $id)
-                ->update(['name' => request()->name, 'email' => request()->email, 'password' => request()->password]);
+    public function showRides()
+    {
+        $rides = DB::table('rides')->get();
+        $data['rides'] = $rides;
 
-            return Redirect::back();
-        }
+        return view('showrides', $data);
+    }
 
-        public function deleteUser($id)
-        {
-            DB::table('users')
-                ->where('id', $id)
-                ->delete();
+    public function showUsers()
+    {
+        $users = DB::table('users')->get();
 
-            return Redirect::back();
-        }
+        $data['users'] = $users;
+
+        return view('showusers', $data);
+    }
+
+    public function updateUser($id)
+    {
+        $user = DB::table('users')
+            ->where('id', $id)
+            ->first() ?: abort(404);
+
+        $data['user'] = $user;
+
+        return view('updateuser', $data);
+    }
+
+    public function updateFinal($id)
+    {
+        DB::table('users')
+            ->where('id', $id)
+            ->update(['name' => request()->name, 'email' => request()->email, 'password' => request()->password]);
+
+        return Redirect::back();
+    }
+
+    public function deleteUser($id)
+    {
+        DB::table('users')
+            ->where('id', $id)
+            ->delete();
+
+        return Redirect::back();
+    }
 }

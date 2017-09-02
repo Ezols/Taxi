@@ -1,26 +1,25 @@
+@extends('layouts.app')
 
+@section('content')
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">Apply for taxi</div>
 
-<h1>Apply for taxi</h1>
+                <div class="panel-body">
+                    <form action="{{ route('applyForTaxiStore') }}" method="POST">
+                        {{ csrf_field() }}
 
-<form action="{{ route('applyForTaxi') }}" method="get">
+                        @include('partials.inputs.text', ['name' => 'address', 'label' => 'Address'])
+                        @include('partials.inputs.select', ['name' => 'leavingTime', 'label' => 'Leaving time', 'options' => $options])
 
-    Name:<br>
-    <input type="text" name="userId">
-    <br>
-    Address:<br>
-    <input type="text" name="address">
-    <br>
-    Leaving time:<br>
-    <select type="text" name="leavingTime">
-        <option value="23:00">23:00</option>
-        <option value="24:00">24:00</option>
-    </select>
-    <br>
-    Invoice:<br>
-    <input type="text" name="invoice">
-    <br>
-    <input type="submit" value="Submit">
+                        <input type="submit" value="Submit" class="btn btn-default">
 
-</form>
-
-<a href="{{ url('/home') }}"><h3>Back to home</h3></a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection

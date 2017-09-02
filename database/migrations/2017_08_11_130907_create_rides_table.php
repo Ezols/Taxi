@@ -20,6 +20,7 @@ class CreateRidesTable extends Migration
             $table->string('address');
             $table->time('leavingTime');
             $table->string('invoice');
+            $table->date('date');
         });
     }
 

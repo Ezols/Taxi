@@ -28,19 +28,18 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
+                    <a class="navbar-brand" href="{{ route('home') }}">
+                        {{ config('app.name', 'Taxi') }}
                     </a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        @if (Auth::user())
-                            <li><a href="{{ route('applyForTaxi') }}">Apply for taxi</a></li>
+                        {{-- @if (Auth::user())
                             <li><a href="{{ route('showRides') }}">Show rides</a></li>
                             <li><a href="{{ route('showUsers') }}">Users</a></li>
-                        @endif
+                        @endif --}}
                     </ul>
 
 
