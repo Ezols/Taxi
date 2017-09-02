@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use App\Ride;
 use Auth;
+use Carbon\Carbon;
 
 class TaxiController
 {
@@ -13,7 +14,7 @@ class TaxiController
 
     public function applyForTaxi()
     {
-        $ride = Ride::where('userId', Auth::id())->first();
+        $ride = Ride::current()->first();
 
         if($ride) {
             return redirect()->route('showApplication');
@@ -25,7 +26,7 @@ class TaxiController
 
     public function applyForTaxiStore()
     {
-        $ride = Ride::where('userId', Auth::id())->first();
+        $ride = Ride::current()->first();
 
         if($ride) {
             return redirect()->route('showApplication');
@@ -48,23 +49,56 @@ class TaxiController
 
     public function showApplication()
     {
-        $ride = Ride::where('userId', Auth::id())->first();
+        $ride = Ride::current()->first();
 
         if(! $ride) {
             return redirect()->route('applyForTaxi');
         }
-
-
 
         return view('showApplication', compact('ride'));
     }
 
     public function showRides()
     {
-        $rides = DB::table('rides')->get();
-        $data['rides'] = $rides;
+        $options = Ride::groupBy('date')->orderBy('date', 'desc')->select('date')->get()
+            ->mapWithKeys(function($item, $key) {
+                return [$item->date => $item->date];
+            });
 
-        return view('showrides', $data);
+        if(!$options->first() || !isTodayDate($options->first())) {
+            $today = Carbon::now()->format('Y-m-d');
+
+            $options = [$today => $today] + $options->toArray();
+        }
+
+        $selectedDate = request()->date ?: head($options);
+        $rides = Ride::orderBy('car', 'asc')->where('date', $selectedDate)->get();
+
+        return view('showrides', compact('options', 'rides', 'selectedDate'));
+    }
+
+    public function assignCarsStore()
+    {
+        $request = request();
+
+        $ride = [];
+        foreach($request->ride as $rideId => $car) {
+            $ride[] = compact('rideId', 'car');
+        }
+
+        $request->merge(compact('ride'));
+
+        // Validation
+        $this->validate($request, [
+            'ride.*.rideId' => 'required|exists:rides,id',
+            'ride.*.car' => "nullable|integer",
+        ]);
+
+        foreach($request->ride as $ride) {
+            Ride::where('id', $ride['rideId'])->update(['car' => $ride['car']]);
+        }
+
+        return redirect()->back();
     }
 
     public function showUsers()

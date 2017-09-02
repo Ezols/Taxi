@@ -25,7 +25,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $ride = Ride::where('userId', Auth::id())->first();
+        if(Auth::user()->can('manageRides')) {
+            return redirect()->route('showRides');
+        }
+
+        $ride = Ride::current()->first();
 
         if($ride) {
             return redirect()->route('showApplication');

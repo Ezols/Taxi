@@ -15,8 +15,17 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+let submitOnInputChange = () => {
+  $('.submitOnChange').on('change', function(e) {
+    $(this).closest('form').submit()
+  })
+}
+
 Vue.component('example', require('./components/Example.vue'));
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    mounted () {
+      submitOnInputChange();
+    }
 });

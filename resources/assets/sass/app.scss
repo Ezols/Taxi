@@ -7,3 +7,11 @@
 
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+td > .form-group {
+  margin-bottom: 0;
+}
+
+.sauraisLauks {
+  width: 100px;
+}

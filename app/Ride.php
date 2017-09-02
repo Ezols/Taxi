@@ -2,6 +2,7 @@
 
 use Eloquent;
 use Carbon\Carbon;
+use Auth;
 
 class Ride extends Eloquent
 {
@@ -25,5 +26,20 @@ class Ride extends Eloquent
         unset($parts[2]);
 
         return join(':', $parts);
+    }
+
+    public function scopeCurrent($query)
+    {
+        $query->where('userId', Auth::id());
+        $this->scopeCurrentDate($query);
+    }
+
+    public function scopeCurrentDate($query)
+    {
+        if(isToday()) {
+            $query->where('date', Carbon::now()->format('Y-m-d'));
+        } else {
+            $query->where('date', Carbon::now()->subDay()->format('Y-m-d'));
+        }
     }
 }

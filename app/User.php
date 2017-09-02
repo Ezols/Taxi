@@ -26,4 +26,16 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function can($something, $params = [])
+    {
+        switch ($something) {
+            case 'manageRides':
+                return $this->role === 'admin';
+
+            default:
+                throw new \Exception("What is {$something} action?");
+                break;
+        }
+    }
 }
