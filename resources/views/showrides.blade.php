@@ -34,7 +34,7 @@
                         </tr>
                         @foreach($rides as $ride)
                             <tr>
-                                <td>{{ $ride->userId }}</td>
+                                <td>{{ $ride->name }}</td>
                                 <td>{{ $ride->address }}</td>
                                 <td>{{ $ride->leavingTime }}</td>
                                 <td class="sauraisLauks">

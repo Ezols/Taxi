@@ -1,44 +1,49 @@
-<h1>Update {{ $user -> name }} account:</h1>
+@extends('layouts.app')
 
-ID:
-{{ $user -> id }}
-<br>
-Name:
-{{ $user -> name }}
-<br>
-Email:
-{{ $user -> email }}
-<br>
-Password:
-{{ $user -> password }}
-<br>
-Created at:
-{{ $user -> created_at }}
-<br>
-Updated at:
-{{ $user -> updated_at }}
-<br>
-<br>
-<br>
-<br>
-<br>
+@section('content')
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">Users</div>
 
+                <div class="panel-body">
+                     <table class="table">
 
-<form action="{{ route('updateFinal', $user->id) }}" method="get">
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Created at</th>
+                            <th>Updated at</th>
+                        </tr>
+                        
+                        <tr>
+                            <td>{{ $user -> id }}</a></td>
+                            <td>{{ $user-> name }}</td>
+                            <td>{{ $user -> email }}</td>
+                            <td>{{ $user -> created_at }}</td>
+                            <td>{{ $user -> updated_at }}</td>
+                        </tr>
+                        
+                        
+                        <form action="{{ route('updateFinal', $user->id) }}" method="get">
 
-    Name:<br>
-    <input type="text" name="name">
-    <br>
-    Email:<br>
-    <input type="text" name="email">
-    <br>
-    Password:<br>
-    <input type="text" name="password">
-    <br>
-    <input type="submit" value="Update">
-
-
-</form>
+                            Name:<br>
+                            <input type="text" name="name">
+                            <br>
+                            Email:<br>
+                            <input type="text" name="email">
+                            <br>
+                            <input type="submit" value="Update">
 
 
-<a href="{{ url('/home') }}"><h3>Back to home</h3></a>
+                        </form>
+                
+                     </table>                     
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
