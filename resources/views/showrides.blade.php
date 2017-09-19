@@ -32,9 +32,11 @@
                             <th>Car</th>
                             <th>Invocie</th>
                         </tr>
+
+              
                         @foreach($rides as $ride)
                             <tr>
-                                <td>{{ $ride->name }}</td>
+                                <td>{{ $ride->user->name }}</td>
                                 <td>{{ $ride->address }}</td>
                                 <td>{{ $ride->leavingTime }}</td>
                                 <td class="sauraisLauks">

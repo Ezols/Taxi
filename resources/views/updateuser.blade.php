@@ -28,16 +28,13 @@
                         
                         
                         <form action="{{ route('updateFinal', $user->id) }}" method="get">
-
-                            Name:<br>
+                            Name:
                             <input type="text" name="name">
-                            <br>
-                            Email:<br>
+                            
+                            Email:
                             <input type="text" name="email">
-                            <br>
+                         
                             <input type="submit" value="Update">
-
-
                         </form>
                 
                      </table>                     

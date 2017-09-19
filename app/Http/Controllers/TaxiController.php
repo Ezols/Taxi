@@ -11,21 +11,38 @@ class TaxiController
     use ValidatesRequests;
 
     const OPTIONS = ['23:00' => '23:00', '00:00' => '00:00', '02:00' => '02:00'];
+    const FROM = 17;
+    const TO = 22;
 
     public function applyForTaxi()
-    {
+    {  
+        if( ! $this->canApply()) {
+            $response = file_get_contents('http://api.icndb.com/jokes/random');
+            $joke = json_decode($response, true)['value']['joke'];
+            $data['joke'] = $joke;
+            $data['start'] = $startHour = "17:00";
+            $data['end'] = $endHour = "22:00";
+            
+            return view('jokes', $data);    
+        }
+        
         $ride = Ride::current()->first();
 
         if($ride) {
             return redirect()->route('showApplication');
         }
-
         $options = static::OPTIONS;
-        return view('applyfortaxi', compact('options'));
+  
+        return view('applyfortaxi', compact('options'));      
     }
+
+   
 
     public function applyForTaxiStore()
     {
+        if( ! $this->canApply()) {
+
+        }
         $ride = Ride::current()->first();
 
         if($ride) {
@@ -60,6 +77,7 @@ class TaxiController
 
     public function showRides()
     {
+        
         $options = Ride::groupBy('date')->orderBy('date', 'desc')->select('date')->get()
             ->mapWithKeys(function($item, $key) {
                 return [$item->date => $item->date];
@@ -132,5 +150,14 @@ class TaxiController
             ->delete();
 
         return Redirect::back();
+    }
+
+    public function canApply()
+    {
+        $currentHour = date("H");
+        $startHour = static::FROM;
+        $endHour = static::TO;
+
+        return $startHour < $currentHour && $currentHour < $endHour;
     }
 }

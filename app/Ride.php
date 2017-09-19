@@ -42,4 +42,10 @@ class Ride extends Eloquent
             $query->where('date', Carbon::now()->subDay()->format('Y-m-d'));
         }
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'userId');
+    }
+
 }
