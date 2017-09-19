@@ -20,8 +20,8 @@ class TaxiController
             $response = file_get_contents('http://api.icndb.com/jokes/random');
             $joke = json_decode($response, true)['value']['joke'];
             $data['joke'] = $joke;
-            $data['start'] = $startHour = "17:00";
-            $data['end'] = $endHour = "22:00";
+            $data['start'] = $startHour = static::FROM . ":00";
+            $data['end'] = $endHour = static::TO . ":00";
             
             return view('jokes', $data);    
         }
@@ -41,8 +41,9 @@ class TaxiController
     public function applyForTaxiStore()
     {
         if( ! $this->canApply()) {
-
+            return redirect()->route('showApplication');
         }
+
         $ride = Ride::current()->first();
 
         if($ride) {
