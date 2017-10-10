@@ -11,7 +11,7 @@ class TaxiController
     use ValidatesRequests;
 
     const OPTIONS = ['23:00' => '23:00', '00:00' => '00:00', '02:00' => '02:00'];
-    const FROM = 17;
+    const FROM = 11;
     const TO = 22;
 
     public function applyForTaxi()
@@ -115,6 +115,17 @@ class TaxiController
         return redirect()->back();
     }
 
+    // public function showUserRides($id)
+    // {
+    //     $userRides = DB::table('rides')
+    //         -where('id', $id)
+    //         ->get();  
+
+    //     $data['userRides'] = $userRides;
+
+    //     return view('updateuser', $data);
+    // }
+
     public function showUsers()
     {
         $users = DB::table('users')->get();
@@ -125,21 +136,32 @@ class TaxiController
     }
 
     public function updateUser($id)
-    {
+    {      
         $user = DB::table('users')
             ->where('id', $id)
             ->first() ?: abort(404);
 
         $data['user'] = $user;
 
+        $userRides = DB::table('rides')
+            ->where('userId', $id)
+            ->get();  
+        
+        $data['userRides'] = $userRides;
+
         return view('updateuser', $data);
     }
 
     public function updateFinal($id)
     {
+        $this->validate(request(), [
+            'name' => 'required',
+            'email' => "required|email",
+        ]);
+
         DB::table('users')
             ->where('id', $id)
-            ->update(['name' => request()->name, 'email' => request()->email, 'password' => request()->password]);
+            ->update(request()->only('name', 'email'));
 
         return Redirect::back();
     }
