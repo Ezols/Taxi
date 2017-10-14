@@ -11,6 +11,7 @@ class TaxiController
     use ValidatesRequests;
 
     const OPTIONS = ['23:00' => '23:00', '00:00' => '00:00', '02:00' => '02:00'];
+    const ROLE_OPTIONS = ['user' => 'User', 'admin' => 'Admin'];
     const FROM = 11;
     const TO = 22;
 
@@ -128,6 +129,10 @@ class TaxiController
 
     public function showUsers()
     {
+        if(!Auth::user() || !Auth::user()->can('manageUsers')) {
+            return redirect()->route('showApplication');            
+        }
+    
         $users = DB::table('users')->get();
 
         $data['users'] = $users;
@@ -135,8 +140,12 @@ class TaxiController
         return view('showusers', $data);
     }
 
-    public function updateUser($id)
+    public function userForm($id)
     {      
+        if(!Auth::user() || !Auth::user()->can('manageUsers')) {
+            return redirect()->route('showApplication');            
+        }
+    
         $user = DB::table('users')
             ->where('id', $id)
             ->first() ?: abort(404);
@@ -147,27 +156,39 @@ class TaxiController
             ->where('userId', $id)
             ->get();  
         
+        $data['roleOptions'] = static::ROLE_OPTIONS;
         $data['userRides'] = $userRides;
 
         return view('updateuser', $data);
     }
 
-    public function updateFinal($id)
+    public function userUpdate($id)
     {
+        if(!Auth::user() || !Auth::user()->can('manageUsers')) {
+            return redirect()->route('showApplication');            
+        }
+    
+        $roles = join(',', array_keys(static::ROLE_OPTIONS));
+
         $this->validate(request(), [
             'name' => 'required',
             'email' => "required|email",
+            'role' => 'required|in:' . $roles,
         ]);
 
         DB::table('users')
             ->where('id', $id)
-            ->update(request()->only('name', 'email'));
+            ->update(request()->only('name', 'email', 'role'));
 
         return Redirect::back();
     }
 
     public function deleteUser($id)
     {
+        if(!Auth::user() || !Auth::user()->can('manageUsers')) {
+            return redirect()->route('showApplication');            
+        }
+    
         DB::table('users')
             ->where('id', $id)
             ->delete();

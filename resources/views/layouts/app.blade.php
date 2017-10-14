@@ -39,6 +39,9 @@
                         @if(Auth::user() && Auth::user()->can('manageRides'))
                             <li><a href="{{ route('applyForTaxi') }}">Application</a></li>
                             <li><a href="{{ route('showRides') }}">Show rides</a></li>
+                        @endif
+
+                        @if(Auth::user() && Auth::user()->can('manageUsers'))
                             <li><a href="{{ route('showUsers') }}">Users</a></li>
                         @endif
                     </ul>

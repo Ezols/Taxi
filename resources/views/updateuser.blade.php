@@ -12,6 +12,7 @@
                         <th>ID</th>
                         <th>Name</th>
                         <th>Email</th>
+                        <th>Role</th>
                         <th>Created at</th>
                         <th>Updated at</th>
                     </tr>
@@ -20,6 +21,7 @@
                         <td>{{ $user -> id }}</a></td>
                         <td>{{ $user-> name }}</td>
                         <td>{{ $user -> email }}</td>
+                        <td>{{ $user -> role }}</td>
                         <td>{{ $user -> created_at }}</td>
                         <td>{{ $user -> updated_at }}</td>
                     </tr>
@@ -29,11 +31,12 @@
                 <div class="panel-heading">User <strong>{{ $user->name }}</strong></div>
 
                 <div class="panel-body">                    
-                    <form action="{{ route('updateUser', $user->id) }}" method="post">
+                    <form action="{{ route('updateFinal', $user->id) }}" method="post">
                         {{ csrf_field() }}
                         @include('partials.inputs.text', ['name' => 'name', 'label' => 'Name', 'value' => $user->name])
                         @include('partials.inputs.text', ['name' => 'email', 'label' => 'Email', 'value' => $user->email])
-                    
+                        @include('partials.inputs.select', ['name' => 'role', 'label' => 'Role', 'value' => $user->role, 'options' => $roleOptions])
+
                         <button type="submit" class="btn btn-default">Submit</button>
                     </form>                
                 </div>

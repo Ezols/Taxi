@@ -31,6 +31,7 @@ class User extends Authenticatable
     {
         switch ($something) {
             case 'manageRides':
+            case 'manageUsers':
                 return $this->role === 'admin';
 
             default:

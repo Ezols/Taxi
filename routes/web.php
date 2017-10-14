@@ -21,6 +21,6 @@ Route::post('/applyfortaxi', 'TaxiController@applyForTaxiStore')->name('applyFor
 Route::post('/assignCars', 'TaxiController@assignCarsStore')->name('assignCarsStore');
 Route::get('/showrides', 'TaxiController@showRides')->name('showRides');
 Route::get('/showusers', 'TaxiController@showUsers')->name('showUsers');
-Route::get('/updateuser/{id}', 'TaxiController@updateUser')->name('updateUser');
-Route::post('/updatefinal/{id}', 'TaxiController@updateFinal')->name('updateFinal');
+Route::get('/updateuser/{id}', 'TaxiController@userForm')->name('updateUser');
+Route::post('/updatefinal/{id}', 'TaxiController@userUpdate')->name('updateFinal');
 Route::get('/deleteuser/{id}', 'TaxiController@deleteUser')->name('deleteUser');
