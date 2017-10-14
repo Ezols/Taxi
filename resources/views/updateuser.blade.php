@@ -29,7 +29,7 @@
                 <div class="panel-heading">User <strong>{{ $user->name }}</strong></div>
 
                 <div class="panel-body">                    
-                    <form action="{{ route('updateFinal', $user->id) }}" method="post">
+                    <form action="{{ route('updateUser', $user->id) }}" method="post">
                         {{ csrf_field() }}
                         @include('partials.inputs.text', ['name' => 'name', 'label' => 'Name', 'value' => $user->name])
                         @include('partials.inputs.text', ['name' => 'email', 'label' => 'Email', 'value' => $user->email])

@@ -14,14 +14,16 @@
                             <th>Name</th>
                             <th>Role</th>
                             <th>Action</th>
+                            <th>Edit</th>
                         </tr>
 
 
                         @foreach($users as $user)
                         <tr>
-                            <td><a href="{{ url('/updateuser', $user->id) }}">{{ $user->name }}</a></td>
+                            <td>{{ $user->name }}</td>
                             <td>{{ $user->role }}</td>
                             <td><a href="{{ url('/deleteuser', $user->id) }}">Delete</a></td>
+                            <td><a href="{{ url('/updateuser', $user->id) }}">Edit</a></td>
                         </tr>
                         @endforeach
                 
