@@ -16,28 +16,28 @@ class TaxiController
     const TO = 22;
 
     public function applyForTaxi()
-    {  
+    {
         if( ! $this->canApply()) {
             $response = file_get_contents('http://api.icndb.com/jokes/random');
             $joke = json_decode($response, true)['value']['joke'];
             $data['joke'] = $joke;
             $data['start'] = $startHour = static::FROM . ":00";
             $data['end'] = $endHour = static::TO . ":00";
-            
-            return view('jokes', $data);    
+
+            return view('jokes', $data);
         }
-        
+
         $ride = Ride::current()->first();
 
         if($ride) {
             return redirect()->route('showApplication');
         }
         $options = static::OPTIONS;
-  
-        return view('applyfortaxi', compact('options'));      
+
+        return view('applyfortaxi', compact('options'));
     }
 
-   
+
 
     public function applyForTaxiStore()
     {
@@ -79,7 +79,7 @@ class TaxiController
 
     public function showRides()
     {
-        
+
         $options = Ride::groupBy('date')->orderBy('date', 'desc')->select('date')->get()
             ->mapWithKeys(function($item, $key) {
                 return [$item->date => $item->date];
@@ -120,7 +120,7 @@ class TaxiController
     // {
     //     $userRides = DB::table('rides')
     //         -where('id', $id)
-    //         ->get();  
+    //         ->get();
 
     //     $data['userRides'] = $userRides;
 
@@ -130,9 +130,9 @@ class TaxiController
     public function showUsers()
     {
         if(!Auth::user() || !Auth::user()->can('manageUsers')) {
-            return redirect()->route('showApplication');            
+            return redirect()->route('showApplication');
         }
-    
+
         $users = DB::table('users')->get();
 
         $data['users'] = $users;
@@ -141,11 +141,11 @@ class TaxiController
     }
 
     public function userForm($id)
-    {      
-        if(!Auth::user() || !Auth::user()->can('manageUsers')) {
-            return redirect()->route('showApplication');            
+    {
+        if(!Auth::user() || !Auth::user()->can('manageUsers', $id)) {
+            return redirect()->route('showApplication');
         }
-    
+
         $user = DB::table('users')
             ->where('id', $id)
             ->first() ?: abort(404);
@@ -154,8 +154,8 @@ class TaxiController
 
         $userRides = DB::table('rides')
             ->where('userId', $id)
-            ->get();  
-        
+            ->get();
+
         $data['roleOptions'] = static::ROLE_OPTIONS;
         $data['userRides'] = $userRides;
 
@@ -164,10 +164,10 @@ class TaxiController
 
     public function userUpdate($id)
     {
-        if(!Auth::user() || !Auth::user()->can('manageUsers')) {
-            return redirect()->route('showApplication');            
+        if(!Auth::user() || !Auth::user()->can('manageUsers', $id)) {
+            return redirect()->route('showApplication');
         }
-    
+
         $roles = join(',', array_keys(static::ROLE_OPTIONS));
 
         $this->validate(request(), [
@@ -186,9 +186,9 @@ class TaxiController
     public function deleteUser($id)
     {
         if(!Auth::user() || !Auth::user()->can('manageUsers')) {
-            return redirect()->route('showApplication');            
+            return redirect()->route('showApplication');
         }
-    
+
         DB::table('users')
             ->where('id', $id)
             ->delete();

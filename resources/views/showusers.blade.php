@@ -7,28 +7,27 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Users</div>
 
-                <div class="panel-body">
-                     <table class="table">
 
-                        <tr>
-                            <th>Name</th>
-                            <th>Role</th>
-                            <th>Action</th>
-                            <th>Edit</th>
-                        </tr>
+                <table class="table">
 
+                    <tr>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Action</th>
+                    </tr>
 
-                        @foreach($users as $user)
-                        <tr>
-                            <td>{{ $user->name }}</td>
-                            <td>{{ $user->role }}</td>
-                            <td><a href="{{ url('/deleteuser', $user->id) }}">Delete</a></td>
-                            <td><a href="{{ url('/updateuser', $user->id) }}">Edit</a></td>
-                        </tr>
-                        @endforeach
-                
-                     </table>                     
-                </div>
+                    @foreach($users as $user)
+                    <tr>
+                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->role }}</td>
+                        <td>
+                            <a href="{{ url('/updateuser', $user->id) }}">Edit</a> |
+                            <a class="text-danger" href="{{ url('/deleteuser', $user->id) }}">Delete</a>
+                        </td>
+                    </tr>
+                    @endforeach
+
+                </table>
             </div>
         </div>
     </div>
