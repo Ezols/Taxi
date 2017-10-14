@@ -8,30 +8,10 @@
                 <div class="panel-heading">Your application for today at <strong>{{ $ride->leavingTime }}</strong></div>
 
                 <div class="panel-body">
-                    <div class="row">
-                        <div class="col-sm-2 text-right">
-                            Address
-                        </div>
-                        <div class="col-sm-9">
-                            <strong>{{ $ride->address }}</strong>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-2 text-right">
-                            Car
-                        </div>
-                        <div class="col-sm-9">
-                            <strong>{{ $ride->car ?: 'Not assigned yet' }}</strong>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-2 text-right">
-                            Invoice
-                        </div>
-                        <div class="col-sm-9">
-                            <strong>{{ $ride->invoice ?: 'Not assigned yet' }}</strong>
-                        </div>
-                    </div>
+                    @include('partials.dataRow', ['label' => 'Address', 'value' => $ride->address])
+                    @include('partials.dataRow', ['label' => 'Car', 'value' => $ride->car])
+                    @include('partials.dataRow', ['label' => 'Invoice', 'value' => $ride->invoice])
+                    @include('partials.dataRow', ['label' => 'Driving with', 'value' => $ride->passenger])
                 </div>
             </div>
         </div>

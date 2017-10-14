@@ -39,4 +39,9 @@ class User extends Authenticatable
                 break;
         }
     }
+
+    public function getFullNameAttribute()
+    {
+        return join(" ", [$this->name, $this->surname]);
+    }
 }

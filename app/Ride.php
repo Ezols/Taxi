@@ -43,9 +43,40 @@ class Ride extends Eloquent
         }
     }
 
+    public function scopeMatchingDate($query, $date)
+    {
+        $query->where('date', $date);
+    }
+
+    public function scopeMatchingCar($query)
+    {
+        $query->where('car', $this->car);
+    }
+
+    public function scopeNotMe($query)
+    {
+        $query->where('id', '!=', $this->id);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'userId');
     }
 
+    public function getPassengerAttribute()
+    {
+        if(!$this->car)
+        {
+            return null;
+        }
+        $passangers = static::matchingCar()
+            ->notMe()
+            ->matchingDate($this->date)
+            ->get()
+            ->map(function($ride) {
+                return $ride->user->fullName;
+            });
+
+        return join(", ", $passangers->toArray());
+    }
 }
