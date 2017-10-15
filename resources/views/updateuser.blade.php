@@ -16,7 +16,7 @@
                         <th>Created at</th>
                         <th>Updated at</th>
                     </tr>
-                    
+
                     <tr>
                         <td>{{ $user -> id }}</a></td>
                         <td>{{ $user-> name }}</td>
@@ -30,15 +30,16 @@
             <div class="panel panel-default">
                 <div class="panel-heading">User <strong>{{ $user->name }}</strong></div>
 
-                <div class="panel-body">                    
+                <div class="panel-body">
                     <form action="{{ route('updateFinal', $user->id) }}" method="post">
                         {{ csrf_field() }}
                         @include('partials.inputs.text', ['name' => 'name', 'label' => 'Name', 'value' => $user->name])
                         @include('partials.inputs.text', ['name' => 'email', 'label' => 'Email', 'value' => $user->email])
-                        @include('partials.inputs.select', ['name' => 'role', 'label' => 'Role', 'value' => $user->role, 'options' => $roleOptions])
-
+                        @if(Auth::user() && Auth::user()->can('changeRole'))    
+                            @include('partials.inputs.select', ['name' => 'role', 'label' => 'Role', 'value' => $user->role, 'options' => $roleOptions])
+                        @endif
                         <button type="submit" class="btn btn-default">Submit</button>
-                    </form>                
+                    </form>
                 </div>
             </div>
 
@@ -55,7 +56,7 @@
                     <th>Invoice</th>
                 </tr>
 
-                
+
                     @foreach ($userRides as $ride)
                     <tr>
                         <td>{{ $ride -> address }}</td>
@@ -64,9 +65,9 @@
                         <td>{{ $ride -> car }}</td>
                         <td>{{ $ride -> invoice }}</td>
                     </tr>
-                    @endforeach   
-                
-                
+                    @endforeach
+
+
                 </table>
             </div>
         </div>

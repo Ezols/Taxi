@@ -30,6 +30,7 @@ class User extends Authenticatable
     public function can($something, $params = [])
     {
         switch ($something) {
+            case 'changeRole':
             case 'manageRides':
                 return $this->role === 'admin';
             case 'manageUsers':

@@ -168,17 +168,22 @@ class TaxiController
             return redirect()->route('showApplication');
         }
 
-        $roles = join(',', array_keys(static::ROLE_OPTIONS));
-
-        $this->validate(request(), [
+        $rules = [
             'name' => 'required',
             'email' => "required|email",
-            'role' => 'required|in:' . $roles,
-        ]);
+        ];
+
+        if(Auth::user() && Auth::user()->can('changeRole'))
+        {
+            $roles = join(',', array_keys(static::ROLE_OPTIONS));
+            $rules['role'] = 'required|in:' . $roles;
+        }
+
+        $this->validate(request(), $rules);
 
         DB::table('users')
             ->where('id', $id)
-            ->update(request()->only('name', 'email', 'role'));
+            ->update(request()->only(array_keys($rules)));
 
         return Redirect::back();
     }
