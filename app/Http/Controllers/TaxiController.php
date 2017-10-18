@@ -3,6 +3,7 @@ use DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use App\Ride;
+use App\User;
 use Auth;
 use Carbon\Carbon;
 
@@ -133,7 +134,7 @@ class TaxiController
             return redirect()->route('showApplication');
         }
 
-        $users = DB::table('users')->get();
+        $users = User::all();
 
         $data['users'] = $users;
 
@@ -194,9 +195,7 @@ class TaxiController
             return redirect()->route('showApplication');
         }
 
-        DB::table('users')
-            ->where('id', $id)
-            ->delete();
+        User::findOrFail($id)->delete();
 
         return Redirect::back();
     }

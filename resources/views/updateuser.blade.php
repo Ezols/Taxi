@@ -35,7 +35,7 @@
                         {{ csrf_field() }}
                         @include('partials.inputs.text', ['name' => 'name', 'label' => 'Name', 'value' => $user->name])
                         @include('partials.inputs.text', ['name' => 'email', 'label' => 'Email', 'value' => $user->email])
-                        @if(Auth::user() && Auth::user()->can('changeRole'))    
+                        @if(Auth::user() && Auth::user()->can('changeRole'))
                             @include('partials.inputs.select', ['name' => 'role', 'label' => 'Role', 'value' => $user->role, 'options' => $roleOptions])
                         @endif
                         <button type="submit" class="btn btn-default">Submit</button>
