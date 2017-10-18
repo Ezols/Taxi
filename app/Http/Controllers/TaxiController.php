@@ -107,7 +107,9 @@ class TaxiController
             'ride.*.invoice' => "nullable",
         ]);
 
-        foreach(request()->ride as $index => $ride) {
+        $rides = (array) request()->ride;
+
+        foreach($rides as $index => $ride) {
             Ride::where('id', $ride['rideId'])->update([
                 'car' => $ride['car'],
                 'invoice' => $ride['invoice'],
