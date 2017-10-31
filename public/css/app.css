@@ -8358,3 +8358,20 @@ td > .form-group {
   width: 100px;
 }
 
+@media print {
+  * {
+    color: black;
+    background: white;
+  }
+
+  .noprint {
+    display: none !important;
+  }
+
+  .panel-body {
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+  }
+}
+

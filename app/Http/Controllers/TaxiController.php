@@ -92,7 +92,7 @@ class TaxiController
             $options = [$today => $today] + $options->toArray();
         }
 
-        $selectedDate = request()->date ?: head($options);
+        $selectedDate = request()->date ?: $options->first();
         $rides = Ride::orderBy('car', 'asc')->where('date', $selectedDate)->get();
 
         return view('showrides', compact('options', 'rides', 'selectedDate'));

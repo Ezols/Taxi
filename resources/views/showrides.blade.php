@@ -7,9 +7,9 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Rides
+                    Rides {{ $selectedDate }}
 
-                    <form action="{{ route('showRides') }}" class="form-inline pull-right" style="margin-top: -3px; margin-right: -10px;">
+                    <form action="{{ route('showRides') }}" class="form-inline pull-right noprint" style="margin-top: -3px; margin-right: -10px;">
                     @include('partials.inputs.select', [
                         'name' => 'date',
                         'value' => $selectedDate,
@@ -65,7 +65,7 @@
                             </tr>
                         @endforeach
                     </table>
-                    <div class="col-md-12">
+                    <div class="col-md-12 noprint">
                         <input class="btn btn-primary pull-right" type="submit" name="submit" value="Save data changes">
                     </div>
                 </form>
