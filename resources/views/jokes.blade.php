@@ -7,7 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     Sorry, application for taxi will be open starting from {{ $start }} till {{ $end }}.
-                    <br>Heres a Chuck joke
+                    <br>Here's a Chuck joke
                 </div>
                 <div class="panel-body">
                     {{ $joke }}

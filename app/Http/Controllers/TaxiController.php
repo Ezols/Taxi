@@ -13,7 +13,7 @@ class TaxiController
 
     const OPTIONS = ['23:00' => '23:00', '00:00' => '00:00', '02:00' => '02:00'];
     const ROLE_OPTIONS = ['user' => 'User', 'admin' => 'Admin'];
-    const FROM = 11;
+    const FROM = 15;
     const TO = 22;
 
     public function applyForTaxi()
@@ -89,7 +89,7 @@ class TaxiController
         if(!$options->first() || !isTodayDate($options->first())) {
             $today = Carbon::now()->format('Y-m-d');
 
-            $options = [$today => $today] + $options->toArray();
+            $options->prepend($today, $today);
         }
 
         $selectedDate = request()->date ?: $options->first();
