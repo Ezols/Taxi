@@ -13,11 +13,12 @@ class TaxiController
 
     const OPTIONS = ['23:00' => '23:00', '00:00' => '00:00', '02:00' => '02:00'];
     const ROLE_OPTIONS = ['user' => 'User', 'admin' => 'Admin'];
-    const FROM = 17;
+    const FROM = 19;
     const TO = 22;
 
     public function applyForTaxi()
     {
+       
         if( ! $this->canApply()) {
             $response = file_get_contents('http://api.icndb.com/jokes/random');
             $joke = json_decode($response, true)['value']['joke'];
@@ -26,8 +27,7 @@ class TaxiController
             $data['end'] = $endHour = static::TO . ":00";
 
             return view('jokes', $data);
-        }
-       // dd(date("h:i:sa"));
+        }      
 
         $ride = Ride::current()->first();
 
@@ -206,9 +206,10 @@ class TaxiController
     public function canApply()
     {
         $currentHour = date("H");
+        //dd($currentHour);
         $startHour = static::FROM;
         $endHour = static::TO;
 
-        return $startHour < $currentHour && $currentHour < $endHour;
+        return $startHour <= $currentHour && $currentHour < $endHour;
     }
 }
