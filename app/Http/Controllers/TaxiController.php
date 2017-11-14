@@ -13,7 +13,7 @@ class TaxiController
 
     const OPTIONS = ['23:00' => '23:00', '00:00' => '00:00', '02:00' => '02:00'];
     const ROLE_OPTIONS = ['user' => 'User', 'admin' => 'Admin'];
-    const FROM = 15;
+    const FROM = 17;
     const TO = 22;
 
     public function applyForTaxi()
@@ -27,6 +27,7 @@ class TaxiController
 
             return view('jokes', $data);
         }
+       // dd(date("h:i:sa"));
 
         $ride = Ride::current()->first();
 
