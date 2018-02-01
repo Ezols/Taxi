@@ -13,7 +13,7 @@ class TaxiController
 
     const OPTIONS = ['23:00' => '23:00', '00:00' => '00:00', '02:00' => '02:00'];
     const ROLE_OPTIONS = ['user' => 'User', 'admin' => 'Admin'];
-    const FROM = 19;
+    const FROM = 14;
     const TO = 22;
 
     public function applyForTaxi()
@@ -199,6 +199,18 @@ class TaxiController
         }
 
         User::findOrFail($id)->delete();
+
+        return Redirect::back();
+    }
+
+    public function deleteRide($id)
+    {
+    
+        dd(DB::table('rides'));
+
+        DB::table('rides')
+            ->where('id', $id)
+            ->delete();            
 
         return Redirect::back();
     }

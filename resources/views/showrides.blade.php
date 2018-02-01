@@ -31,6 +31,7 @@
                             <th>LeavingTime</th>
                             <th>Car</th>
                             <th>Invocie</th>
+                            <th>Action</th>
                         </tr>
 
               
@@ -61,6 +62,12 @@
                                         'errorKey' => "ride.{$loop->index}.invoice",
                                         'hideErrorMessage' => true,
                                     ])
+                                </td>
+                                <td>
+                                   <form id="delete-form" action="{{ route('deleteRide', $ride->id) }}" method="POST">
+                                        {{ csrf_field() }}
+                                        <input class="btn btn-danger" type="submit" value="Delete">
+                                   </form>
                                 </td>
                             </tr>
                         @endforeach

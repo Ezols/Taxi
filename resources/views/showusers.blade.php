@@ -7,7 +7,6 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Users</div>
 
-
                 <table class="table">
 
                     <tr>

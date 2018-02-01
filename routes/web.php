@@ -24,3 +24,4 @@ Route::get('/showusers', 'TaxiController@showUsers')->name('showUsers');
 Route::get('/updateuser/{id}', 'TaxiController@userForm')->name('updateUser');
 Route::post('/updatefinal/{id}', 'TaxiController@userUpdate')->name('updateFinal');
 Route::get('/deleteuser/{id}', 'TaxiController@deleteUser')->name('deleteUser');
+Route::post('/deleteride/{id}', 'TaxiController@deleteRide')->name('deleteRide');
