@@ -63,11 +63,19 @@
                                         'hideErrorMessage' => true,
                                     ])
                                 </td>
-                                <td>
-                                   <form id="delete-form" action="{{ route('deleteRide', $ride->id) }}" method="POST">
-                                        {{ csrf_field() }}
-                                        <input class="btn btn-danger" type="submit" value="Delete">
-                                   </form>
+                                <td> 
+                                    <a class="btn btn-danger" href="{{ route('deleteRide', $ride -> id) }}"
+                                    onclick="
+                                        event.preventDefault();
+                                        var form = document.getElementById('delete-form');
+                                        var href = this.getAttribute('href');
+                                        form.action = href;
+                                        form.submit();
+                                        ">
+
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                    Delete
+                                    </a>                        
                                 </td>
                             </tr>
                         @endforeach
@@ -76,6 +84,9 @@
                         <input class="btn btn-primary pull-right" type="submit" name="submit" value="Save data changes">
                     </div>
                 </form>
+                <form id="delete-form" action="" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                </form>  
             </div>
         </div>
     </div>
