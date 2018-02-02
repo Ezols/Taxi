@@ -13,8 +13,8 @@ class TaxiController
 
     const OPTIONS = ['23:00' => '23:00', '00:00' => '00:00', '02:00' => '02:00'];
     const ROLE_OPTIONS = ['user' => 'User', 'admin' => 'Admin'];
-    const FROM = 14;
-    const TO = 23;
+    const FROM = 17;
+    const TO = 20;
 
     public function applyForTaxi()
     {
