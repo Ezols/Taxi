@@ -11,6 +11,7 @@
 
                     <tr>
                         <th>Name</th>
+                        <th>Surname</th>
                         <th>Role</th>
                         <th>Action</th>
                     </tr>
@@ -18,6 +19,7 @@
                     @foreach($users as $user)
                     <tr>
                         <td>{{ $user->name }}</td>
+                        <td>{{ $user->surname }}</td>
                         <td>{{ $user->role }}</td>
                         <td>
                             <a href="{{ url('/updateuser', $user->id) }}">Edit</a> |

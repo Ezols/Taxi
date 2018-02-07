@@ -26,7 +26,8 @@
                     {{ csrf_field() }}
                     <table class="table">
                         <tr>
-                            <th>User</th>
+                            <th>Name</th>
+                            <th>Surname</th>
                             <th>Address</th>
                             <th>LeavingTime</th>
                             <th>Car</th>
@@ -38,6 +39,7 @@
                         @foreach($rides as $ride)
                             <tr>
                                 <td>{{ $ride->user->name }}</td>
+                                <td>{{ $ride->user->surname }}</td>
                                 <td>{{ $ride->address }}</td>
                                 <td>{{ $ride->leavingTime }}</td>
                                 <td class="sauraisLauks">
@@ -64,7 +66,7 @@
                                     ])
                                 </td>
                                 <td> 
-                                    <a class="btn btn-danger" href="{{ route('deleteRide', $ride -> id) }}"
+                                    <a class="btn btn-danger" class="" role="group" href="{{ route('deleteRide', $ride -> id) }}"
                                     onclick="
                                         event.preventDefault();
                                         var form = document.getElementById('delete-form');
