@@ -174,6 +174,7 @@ class TaxiController
 
         $rules = [
             'name' => 'required',
+            'surname' => 'required',
             'email' => "required|email",
         ];
 

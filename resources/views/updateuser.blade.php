@@ -11,6 +11,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
+                        <th>Surname</th>
                         <th>Email</th>
                         <th>Role</th>
                         <th>Created at</th>
@@ -18,12 +19,13 @@
                     </tr>
 
                     <tr>
-                        <td>{{ $user -> id }}</a></td>
-                        <td>{{ $user-> name }}</td>
-                        <td>{{ $user -> email }}</td>
-                        <td>{{ $user -> role }}</td>
-                        <td>{{ $user -> created_at }}</td>
-                        <td>{{ $user -> updated_at }}</td>
+                        <td>{{ $user->id }}</a></td>
+                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->surname }}</td>
+                        <td>{{ $user->email }}</td>
+                        <td>{{ $user->role }}</td>
+                        <td>{{ $user->created_at }}</td>
+                        <td>{{ $user->updated_at }}</td>
                     </tr>
                 </table>
             </div>
@@ -34,6 +36,7 @@
                     <form action="{{ route('updateFinal', $user->id) }}" method="post">
                         {{ csrf_field() }}
                         @include('partials.inputs.text', ['name' => 'name', 'label' => 'Name', 'value' => $user->name])
+                        @include('partials.inputs.text', ['name' => 'surname', 'label' => 'Surname', 'value' => $user->surname])
                         @include('partials.inputs.text', ['name' => 'email', 'label' => 'Email', 'value' => $user->email])
                         @if(Auth::user() && Auth::user()->can('changeRole'))
                             @include('partials.inputs.select', ['name' => 'role', 'label' => 'Role', 'value' => $user->role, 'options' => $roleOptions])
@@ -59,11 +62,11 @@
 
                     @foreach ($userRides as $ride)
                     <tr>
-                        <td>{{ $ride -> address }}</td>
-                        <td>{{ $ride -> leavingTime }}</td>
-                        <td>{{ $ride -> date }}</td>
-                        <td>{{ $ride -> car }}</td>
-                        <td>{{ $ride -> invoice }}</td>
+                        <td>{{ $ride->address }}</td>
+                        <td>{{ $ride->leavingTime }}</td>
+                        <td>{{ $ride->date }}</td>
+                        <td>{{ $ride->car }}</td>
+                        <td>{{ $ride->invoice }}</td>
                     </tr>
                     @endforeach
 
