@@ -85,10 +85,26 @@
                     <div class="col-md-12 noprint">
                         <input class="btn btn-primary pull-right" type="submit" name="submit" value="Save data changes">
                     </div>
+
                 </form>
                 <form id="delete-form" action="" method="POST" style="display: none;">
                         {{ csrf_field() }}
                 </form>  
+
+               
+
+                <form class="panel-body" action="{{ route('exportRide') }}" method="get">
+
+                    <div class="col-md-12 noprint">
+                        <label for="startDate">Chose date from:</label>       
+                        <input type="date" id="startDate" name="startDate">
+
+                        <label for="endDate">Chose date till:</label>       
+                        <input type="date" id="endDate" name="endDate">      
+
+                        <input class="btn btn-primary pull-right" type="submit" name="submit" value="Export">    
+                    </div>
+                </form>                            
             </div>
         </div>
     </div>

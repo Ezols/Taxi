@@ -25,3 +25,4 @@ Route::get('/updateuser/{id}', 'TaxiController@userForm')->name('updateUser');
 Route::post('/updatefinal/{id}', 'TaxiController@userUpdate')->name('updateFinal');
 Route::get('/deleteuser/{id}', 'TaxiController@deleteUser')->name('deleteUser');
 Route::post('/deleteride/{id}', 'TaxiController@deleteRide')->name('deleteRide');
+Route::get('/export', 'TaxiController@exportRide')->name('exportRide');

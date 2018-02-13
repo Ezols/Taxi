@@ -6,6 +6,7 @@ use App\Ride;
 use App\User;
 use Auth;
 use Carbon\Carbon;
+use Excel;
 
 class TaxiController
 {
@@ -13,7 +14,7 @@ class TaxiController
 
     const OPTIONS = ['23:00' => '23:00', '00:00' => '00:00', '02:00' => '02:00'];
     const ROLE_OPTIONS = ['user' => 'User', 'admin' => 'Admin'];
-    const FROM = 17;
+    const FROM = 11;
     const TO = 20;
 
     public function applyForTaxi()
@@ -226,5 +227,38 @@ class TaxiController
         $endHour = static::TO;
 
         return $startHour <= $currentHour && $currentHour < $endHour;
+    }
+
+    public function exportRide()
+    {
+
+
+        $this->validate(request(), [
+            "startDate" => "nullable|date",
+            "endDate" => "nullable|date",
+        ]);
+
+        $file = Excel::create('New file', function($excel) 
+        {
+            $excel->sheet('New sheet', function($sheet)
+            {
+                $from = request()->startDate;
+                $to = request()->endDate;
+                $querry = Ride::with('user');
+
+                if($from)
+                {
+                    $querry->where("date", ">=", $from);
+                }
+                if($to)
+                {
+                    $querry->where("date", "<=", $to);
+                }
+
+                $data['rides'] = $querry->get();
+                $sheet->loadView('excel', $data);        
+            });
+        
+        })->export('xls');
     }
 }
