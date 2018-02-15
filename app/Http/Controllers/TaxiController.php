@@ -238,9 +238,9 @@ class TaxiController
             "endDate" => "nullable|date",
         ]);
 
-        $file = Excel::create('New file', function($excel) 
+        $file = Excel::create('Export', function($excel) 
         {
-            $excel->sheet('New sheet', function($sheet)
+            $excel->sheet('Rides', function($sheet)
             {
                 $from = request()->startDate;
                 $to = request()->endDate;

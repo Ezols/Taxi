@@ -10,7 +10,6 @@
     <th>Date</th>
     <th>Car</th>
     <th>Invocie</th>
-    <th>Action</th>
     </tr>
 
     @foreach($rides as $ride)
@@ -20,6 +19,8 @@
             <td>{{ $ride->address }}</td>
             <td>{{ $ride->leavingTime }}</td>
             <td>{{ $ride->date }}</td>
+            <td>{{ $ride->car}}</td>
+            <td>{{ $ride->invoice }}</td>
         </tr>
     @endforeach
  </table>
