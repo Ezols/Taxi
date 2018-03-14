@@ -111,7 +111,8 @@ class TaxiController
 
         $rides = (array) request()->ride;
 
-        foreach($rides as $index => $ride) {
+        foreach($rides as $index => $ride)
+            {
             Ride::where('id', $ride['rideId'])->update([
                 'car' => $ride['car'],
                 'invoice' => $ride['invoice'],
