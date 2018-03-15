@@ -37,7 +37,8 @@ class User extends Authenticatable
                 return $this->role === 'admin';
             case 'manageUsers':
                 return $this->role === 'admin' || $this->id == $params;
-
+            case 'applyAtAnyTime':
+                return $this->role === 'admin';
             default:
                 throw new \Exception("What is {$something} action?");
                 break;

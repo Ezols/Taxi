@@ -14,12 +14,12 @@ class TaxiController
 
     const OPTIONS = ['23:00' => '23:00', '00:00' => '00:00', '02:00' => '02:00'];
     const ROLE_OPTIONS = ['user' => 'User', 'admin' => 'Admin'];
-    const FROM = 11;
+    const FROM = 17;
     const TO = 20;
 
     public function applyForTaxi()
     {
-       
+        //dd($this->canApply());       
         if( ! $this->canApply()) {
             $response = file_get_contents('http://api.icndb.com/jokes/random');
             $joke = json_decode($response, true)['value']['joke'];
@@ -222,8 +222,17 @@ class TaxiController
 
     public function canApply()
     {
+        // if(Auth::user()->role == 'admin')
+        // {
+        //     return true;
+        // }
+
+        if(Auth::user()->can('applyAtAnyTime'))
+        {
+            return true;
+        }
+
         $currentHour = date("H");
-        //dd($currentHour);
         $startHour = static::FROM;
         $endHour = static::TO;
 
